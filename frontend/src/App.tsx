@@ -1,24 +1,26 @@
 import React from 'react';
-import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="container-fluid">
+            <h1 className="text-light">Yodlee Sandbox Browser</h1>
+            <p className="text-secondary">
+                This website demonstrates the Envestment Yodlee developer quickstart experience using the browser instead of Postman.
+                To get started, follow the steps as listed below.
+            </p>
+            <h4 className="text-light">1. Select a flow</h4>
+            <div className="container-fluid text-center">
+                <div className="row row-cols-auto">
+                    <div className="col">
+                        <button type="button" className="btn btn-primary">Verify Account</button>
+                    </div>
+                    <div className="col">
+                        <button type="button" className="btn btn-primary">Verify Balances</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default App;
