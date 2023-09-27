@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
-
-	"github.com/joho/godotenv"
 )
 
 type GetUserToken struct {
@@ -16,7 +16,24 @@ type GetUserToken struct {
 	Secret   string `json:"secret"`
 }
 
+type AccountResponse struct {
+	Name string `json:"name"`
+}
+
 func main() {
+	router := gin.Default()
+	router.GET("/accountInfo", getAccountInfo)
+
+	router.Run("localhost:8080")
+}
+
+func getAccountInfo(c *gin.Context) {
+	getAccessToken()
+	c.IndentedJSON(http.StatusOK, AccountResponse{Name: "Grant"})
+
+}
+
+func getAccessToken() {
 	data := url.Values{}
 	data.Add("clientId", getEnvVariable("CLIENT_ID"))
 	data.Add("secret", getEnvVariable("SECRET"))
