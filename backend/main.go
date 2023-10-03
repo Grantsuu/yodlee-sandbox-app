@@ -9,6 +9,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"grant-tech-yodlee.com/types"
@@ -21,12 +22,15 @@ const (
 
 func main() {
 	router := gin.Default()
+	router.Use(cors.Default())
+
 	router.GET("/api/getUserToken", getUserToken)
 
 	router.Run("localhost:8080")
 }
 
 func getUserToken(c *gin.Context) {
+
 	data := url.Values{}
 	data.Add("clientId", getEnvVariable("CLIENT_ID"))
 	data.Add("secret", getEnvVariable("SECRET"))
