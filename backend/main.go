@@ -21,18 +21,12 @@ const (
 
 func main() {
 	router := gin.Default()
-	router.GET("/api/accountInfo", getAccountInfo)
+	router.GET("/api/getUserToken", getUserToken)
 
 	router.Run("localhost:8080")
 }
 
-func getAccountInfo(c *gin.Context) {
-	res, _ := getUserToken()
-	c.IndentedJSON(http.StatusOK, res)
-
-}
-
-func getUserToken() (interface{}, error) {
+func getUserToken(c *gin.Context) {
 	data := url.Values{}
 	data.Add("clientId", getEnvVariable("CLIENT_ID"))
 	data.Add("secret", getEnvVariable("SECRET"))
@@ -40,7 +34,7 @@ func getUserToken() (interface{}, error) {
 	req, err := http.NewRequest(http.MethodPost, YodleeAuthTokenUrl, strings.NewReader(data.Encode()))
 	if err != nil {
 		log.Printf("error creating new request: %v\n", err)
-		return nil, err
+		return
 	}
 
 	req.Header.Set("Api-Version", YodleeAuthAPIVersion)
@@ -52,13 +46,13 @@ func getUserToken() (interface{}, error) {
 	res, err := client.Do(req)
 	if err != nil {
 		log.Printf("error sending http request: %v\n", err)
-		return nil, err
+		return
 	}
 
 	responseBytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Printf("error reading http response: %v\n", err)
-		return nil, err
+		return
 	}
 	res.Body.Close()
 
@@ -67,11 +61,11 @@ func getUserToken() (interface{}, error) {
 	err = json.Unmarshal(responseBytes, &userToken)
 	if err != nil {
 		log.Printf("error unmarshalling response bytes: %v\n", err)
-		return nil, err
+		return
 	}
 
 	log.Printf("user token received: %v\n", userToken)
-	return userToken, nil
+	c.IndentedJSON(http.StatusOK, userToken)
 }
 
 func getEnvVariable(key string) string {
