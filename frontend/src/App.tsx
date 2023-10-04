@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FlowSelector from './components/FlowSelector'
 import GenerateAuthToken from './components/GenerateAuthToken';
+import { getUserToken } from './YodleeSandboxAPI'
 
 const App = () => {
+    useEffect(() => {
+        console.log("hello")
+        fetch('https://backend-m6f5pdrxua-ue.a.run.app/api/getUserToken')
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+    });
+
     const [flow, setFlow] = useState<number>(0);
     return (
         <div className="container-fluid">
@@ -15,7 +24,7 @@ const App = () => {
                 The original Postman guide can be found here: <a target="_blank" href="https://av.developer.yodlee.com/#cd52ebe4-1613-4695-b621-a4f9081251db">https://av.developer.yodlee.com/#cd52ebe4-1613-4695-b621-a4f9081251db</a>
             </p>
             {/* Step 1 - Select Flow */}
-                <FlowSelector setFlow={setFlow} className="mb-3"/>
+            <FlowSelector setFlow={setFlow} className="mb-3" />
             {/* Step 2 - Generate Authentication Token */}
             {flow === 1 &&
                 <GenerateAuthToken />

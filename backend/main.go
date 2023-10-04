@@ -26,7 +26,7 @@ func main() {
 
 	router.GET("/api/getUserToken", getUserToken)
 
-	router.Run("localhost:8080")
+	router.Run(":8080")
 }
 
 func getUserToken(c *gin.Context) {
