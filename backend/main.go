@@ -6,11 +6,10 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"grant-tech-yodlee.com/types"
 )
 
@@ -21,61 +20,59 @@ const (
 
 func main() {
 	router := gin.Default()
-	router.GET("/api/accountInfo", getAccountInfo)
+	router.Use(cors.Default())
 
-	router.Run("localhost:8080")
+	router.POST("/api/userToken", postUserToken)
+
+	router.Run(":8080")
 }
 
-func getAccountInfo(c *gin.Context) {
-	res, _ := getUserToken()
-	c.IndentedJSON(http.StatusOK, res)
+func postUserToken(c *gin.Context) {
 
-}
+	body := types.UserTokenRequest{}
+	err := c.BindJSON(&body)
+	if err != nil {
+		log.Printf("error reading request body: %v\n", err)
+		return
+	}
 
-func getUserToken() (interface{}, error) {
 	data := url.Values{}
-	data.Add("clientId", getEnvVariable("CLIENT_ID"))
-	data.Add("secret", getEnvVariable("SECRET"))
+	data.Add("clientId", body.ClientId)
+	data.Add("secret", body.Secret)
 
 	req, err := http.NewRequest(http.MethodPost, YodleeAuthTokenUrl, strings.NewReader(data.Encode()))
 	if err != nil {
 		log.Printf("error creating new request: %v\n", err)
-		return nil, err
+		return
 	}
 
 	req.Header.Set("Api-Version", YodleeAuthAPIVersion)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("loginName", getEnvVariable("USER_NAME"))
+	req.Header.Set("loginName", body.UserName)
 
 	client := &http.Client{}
 
 	res, err := client.Do(req)
 	if err != nil {
 		log.Printf("error sending http request: %v\n", err)
-		return nil, err
+		return
 	}
 
 	responseBytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Printf("error reading http response: %v\n", err)
-		return nil, err
+		return
 	}
 	res.Body.Close()
 
-	userToken := types.UserToken{}
+	userToken := types.UserTokenResponse{}
 
 	err = json.Unmarshal(responseBytes, &userToken)
 	if err != nil {
 		log.Printf("error unmarshalling response bytes: %v\n", err)
-		return nil, err
+		return
 	}
 
 	log.Printf("user token received: %v\n", userToken)
-	return userToken, nil
-}
-
-func getEnvVariable(key string) string {
-	_ = godotenv.Load(".env.local")
-
-	return os.Getenv(key)
+	c.IndentedJSON(http.StatusOK, userToken)
 }
