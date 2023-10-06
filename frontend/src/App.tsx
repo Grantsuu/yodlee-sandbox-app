@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import FlowSelector from './components/FlowSelector'
 import GenerateAuthToken from './components/GenerateAuthToken';
-import { getUserToken } from './YodleeSandboxAPI'
 
 const App = () => {
-    useEffect(() => {
-        console.log("hello")
-        fetch('https://backend-m6f5pdrxua-ue.a.run.app/api/getUserToken')
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-    });
 
     const [flow, setFlow] = useState<number>(0);
     return (
