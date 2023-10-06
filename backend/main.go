@@ -6,12 +6,10 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"grant-tech-yodlee.com/types"
 )
 
@@ -24,16 +22,23 @@ func main() {
 	router := gin.Default()
 	router.Use(cors.Default())
 
-	router.GET("/api/getUserToken", getUserToken)
+	router.POST("/api/userToken", postUserToken)
 
 	router.Run(":8080")
 }
 
-func getUserToken(c *gin.Context) {
+func postUserToken(c *gin.Context) {
+
+	body := types.UserTokenRequest{}
+	err := c.BindJSON(&body)
+	if err != nil {
+		log.Printf("error reading request body: %v\n", err)
+		return
+	}
 
 	data := url.Values{}
-	data.Add("clientId", getEnvVariable("CLIENT_ID"))
-	data.Add("secret", getEnvVariable("SECRET"))
+	data.Add("clientId", body.ClientId)
+	data.Add("secret", body.Secret)
 
 	req, err := http.NewRequest(http.MethodPost, YodleeAuthTokenUrl, strings.NewReader(data.Encode()))
 	if err != nil {
@@ -43,7 +48,7 @@ func getUserToken(c *gin.Context) {
 
 	req.Header.Set("Api-Version", YodleeAuthAPIVersion)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("loginName", getEnvVariable("USER_NAME"))
+	req.Header.Set("loginName", body.UserName)
 
 	client := &http.Client{}
 
@@ -60,7 +65,7 @@ func getUserToken(c *gin.Context) {
 	}
 	res.Body.Close()
 
-	userToken := types.UserToken{}
+	userToken := types.UserTokenResponse{}
 
 	err = json.Unmarshal(responseBytes, &userToken)
 	if err != nil {
@@ -70,10 +75,4 @@ func getUserToken(c *gin.Context) {
 
 	log.Printf("user token received: %v\n", userToken)
 	c.IndentedJSON(http.StatusOK, userToken)
-}
-
-func getEnvVariable(key string) string {
-	_ = godotenv.Load(".env.local")
-
-	return os.Getenv(key)
 }
