@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import FlowSelector from './components/FlowSelector'
+import FlowSelector from './components/FlowSelector/FlowSelector'
 import GenerateAuthToken from './components/GenerateAuthToken';
 
 const App = () => {

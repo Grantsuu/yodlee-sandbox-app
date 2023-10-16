@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
+import { CodeBlock } from './CodeBlock/CodeBlock'
 import { postUserToken, UserTokenResponse } from '../YodleeSandboxAPI'
 
-const GenerateAuthToken = () => {
+const GenerateAuthToken: React.FC = () => {
     const [inputs, setInputs] = useState({
         clientId: '',
         secret: '',
         userName: ''
     })
+
     const [accessToken, setAccessToken] = useState("")
 
     const inputsHandler = (e: any) => {
@@ -25,6 +27,7 @@ const GenerateAuthToken = () => {
                 setAccessToken((data as UserTokenResponse).token.accessToken)
             })
     }
+
     return (
         <div>
             <h4 className="text-light">2. Generate an Authentication Token</h4>
@@ -77,13 +80,10 @@ const GenerateAuthToken = () => {
                     onClick={onSubmit}>
                     Submit
                 </button>
+                <CodeBlock
+                />
                 {accessToken &&
-                    <div className="card text-white bg-dark w-50 mb-3">
-                        <div className="card-header">Access Token</div>
-                        <div className="card-body">
-                            <h5 className="card-title"><code>{accessToken}</code></h5>
-                        </div>
-                    </div>
+                    <div></div>
                 }
             </div>
         </div>
