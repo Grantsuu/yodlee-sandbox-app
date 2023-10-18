@@ -7,11 +7,11 @@ gcloud config set project conductive-bank-400222
 ```
 ## Deployment
 To deploy this code to the Google Cloud Run service use the following steps:
-1. Build the Go project with:
+1. Make sure you are in the same directory as the `main.go` file:
     ```
-    go build main.go
+    cd ~/Code/Repos/yodlee-sandbox-app/backend
     ```
-2. Deploy the compiled `main.go` file to the Cloud Run container with:
+2. Deploy the backend to the Cloud Run container with:
     ```
     gcloud run deploy backend --source . --region=us-east1
     ```

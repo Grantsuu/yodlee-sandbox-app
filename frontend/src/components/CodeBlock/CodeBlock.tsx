@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { stackoverflowDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'; 
 
-export const CodeBlock = () => {
+interface CodeBlockProps {
+    title: string
+    code: string
+}
+
+export const CodeBlock = ({title, code}: CodeBlockProps) => {
 
     const [copyIcon, setCopyIcon] = useState(<i className="fa-regular fa-clone"></i>)
 
     const handleCopyButton = () => {
         setCopyIcon(<i className="fa-solid fa-check"></i>)
         setTimeout(() => setCopyIcon(<i className="fa-regular fa-clone"></i>), 700)
-        navigator.clipboard.writeText("Copied text???");
+        navigator.clipboard.writeText(code);
     }
 
     const tooltip = (
@@ -22,7 +27,7 @@ export const CodeBlock = () => {
     return (
         <div className="card text-bg-dark">
             <div className="card-header m-0" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                Header
+                <div className="font-monospace">{title}</div>
                 <OverlayTrigger placement="top" trigger="focus" overlay={tooltip}>
                     <button type="button" className="btn btn-outline-light" onClick={handleCopyButton}>
                         {copyIcon}
@@ -30,8 +35,8 @@ export const CodeBlock = () => {
                 </OverlayTrigger>
             </div>
             <div className="card-body py-2">
-                <SyntaxHighlighter language="javascript" style={stackoverflowDark} className="m-0 py-3">
-                    "GCziUML7RPcWf9s9SlGQg9ipo0SR"
+                <SyntaxHighlighter language="javascript" style={dracula} className="m-0 py-3">
+                    {code}
                 </SyntaxHighlighter>
             </div>
         </div>
