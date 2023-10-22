@@ -8,10 +8,11 @@ interface AccountBalanceProps {
 }
 
 const AccountBalance = ({ providerAccountId }: AccountBalanceProps) => {
-
+    const [submitClicked, setSubmitClicked] = useState(false)
     const [accountBalance, setAccountBalance] = useState("")
 
     const onSubmit = () => {
+        setSubmitClicked(true)
         getAccountBalance(providerAccountId)
             .then(data => {
                 console.log(data)
@@ -33,7 +34,7 @@ const AccountBalance = ({ providerAccountId }: AccountBalanceProps) => {
                 onClick={onSubmit}>
                 Submit Request
             </button>
-            {accountBalance &&
+            {submitClicked &&
                 <div>
                     <CodeBlock
                         title="Account Balance"

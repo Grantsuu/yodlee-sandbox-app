@@ -17,7 +17,7 @@ const App = () => {
         if (step === 2 && accessToken) {
             setStep(3)
         }
-    })
+    },[step, accessToken])
 
     return (
         <div className="container-fluid">
@@ -28,7 +28,7 @@ const App = () => {
                     This website demonstrates the Envestment Yodlee developer quickstart experience using the browser instead of Postman.
                     <br></br>To get started, follow the steps as listed below.
                     <div className="fs-6 text-secondary">
-                        (The original Postman guide can be found <a target="_blank" href="https://av.developer.yodlee.com/#cd52ebe4-1613-4695-b621-a4f9081251db">here</a>.)
+                        (The original Postman guide can be found <a target="_blank" rel="noreferrer" href="https://av.developer.yodlee.com/#cd52ebe4-1613-4695-b621-a4f9081251db">here</a>.)
                     </div>
                 </p>
             </div>

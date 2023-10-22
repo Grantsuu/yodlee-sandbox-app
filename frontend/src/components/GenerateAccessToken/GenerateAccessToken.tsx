@@ -9,6 +9,7 @@ interface GenerateAccessTokenProps {
 }
 
 const GenerateAccessToken = ({ accessToken, setAccessToken, setStep }: GenerateAccessTokenProps) => {
+    const [submitClicked, setSubmitClicked] = useState(false)
     const [inputs, setInputs] = useState({
         clientId: '',
         secret: '',
@@ -25,6 +26,7 @@ const GenerateAccessToken = ({ accessToken, setAccessToken, setStep }: GenerateA
 
     const onSubmit = () => {
         setStep(3)
+        setSubmitClicked(true)
         postUserToken({ clientId: inputs.clientId, secret: inputs.secret, userName: inputs.userName })
             .then(data => {
                 console.log(data)
@@ -37,7 +39,7 @@ const GenerateAccessToken = ({ accessToken, setAccessToken, setStep }: GenerateA
             <h4 className="text-light">2. Generate an Access Token</h4>
             <ol>
                 <li>
-                    Login to your <a target="_blank" href="https://developer.envestnet.com/user/login?type=ydl">Yodlee developer account</a> and navigate to the Dashboard.
+                    Login to your <a target="_blank" rel="noreferrer" href="https://developer.envestnet.com/user/login?type=ydl">Yodlee developer account</a> and navigate to the Dashboard.
                 </li>
                 <li>
                     Find and enter your <code>client_id</code>, <code>secret</code>, and <code>userName</code> below and click the "Submit" button to receive your access token.
@@ -81,7 +83,7 @@ const GenerateAccessToken = ({ accessToken, setAccessToken, setStep }: GenerateA
                 onClick={onSubmit}>
                 Submit
             </button>
-            {accessToken &&
+            {submitClicked &&
                 <CodeBlock
                     title="Access Token"
                     code={accessToken}

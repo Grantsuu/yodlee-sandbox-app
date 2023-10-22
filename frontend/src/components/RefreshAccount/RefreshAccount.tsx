@@ -8,14 +8,20 @@ interface RefreshAccountProps {
 }
 
 const RefreshAccount = ({ providerAccountId, setStep }: RefreshAccountProps) => {
+    const [submitClicked, setSubmitClicked] = useState(false)
     const [accountRefresh, setAccountRefresh] = useState("")
 
     const onSubmit = () => {
         setStep(5)
+        setSubmitClicked(true)
         putRefreshAccount(providerAccountId)
             .then(data => {
                 console.log(data)
-                setAccountRefresh(JSON.stringify(data["providerAccount"], null, 2))
+                if (Object.keys(data).length === 0) {
+                    setAccountRefresh("Account data refreshed too recently")
+                } else {
+                    setAccountRefresh(JSON.stringify(data["providerAccount"], null, 2))
+                }
             })
     }
 
@@ -34,7 +40,7 @@ const RefreshAccount = ({ providerAccountId, setStep }: RefreshAccountProps) => 
                 onClick={onSubmit}>
                 Submit Request
             </button>
-            {accountRefresh &&
+            {submitClicked &&
                 <CodeBlock
                     title="Refresh Account Response"
                     code={accountRefresh}
