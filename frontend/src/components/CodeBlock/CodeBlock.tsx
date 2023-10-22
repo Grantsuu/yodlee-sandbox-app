@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'; 
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 interface CodeBlockProps {
     title: string
     code: string
 }
 
-export const CodeBlock = ({title, code}: CodeBlockProps) => {
+export const CodeBlock = ({ title, code }: CodeBlockProps) => {
 
     const [copyIcon, setCopyIcon] = useState(<i className="fa-regular fa-clone"></i>)
 
@@ -22,7 +22,7 @@ export const CodeBlock = ({title, code}: CodeBlockProps) => {
         <Tooltip id="tooltip">
             Copied!
         </Tooltip>
-      );
+    );
 
     return (
         <div className="card text-bg-dark">

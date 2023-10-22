@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import FlowSelector from './components/FlowSelector/FlowSelector'
+import React, { useState } from 'react';
+import FlowSelector from './components/FlowSelector/FlowSelector';
 import GenerateAuthToken from './components/GenerateAuthToken';
+import FastLinkCodePen from './components/FastLinkCodePen/FastLinkCodePen';
 
 const App = () => {
-
-    const [flow, setFlow] = useState<number>(0);
+    const [step, setStep] = useState(1);
+    const [flow, setFlow] = useState(0);
     return (
         <div className="container-fluid">
+            {/* Home page header */}
             <div className="container text-center">
                 <h1 className="text-light">Yodlee Quickstart in Browser</h1>
                 <p className="fs-5 text-secondary">
@@ -17,16 +19,24 @@ const App = () => {
                     </div>
                 </p>
             </div>
+            {/* Quickstart steps */}
             <div className="container w-50">
                 {/* Step 1 - Select Flow */}
-                <FlowSelector setFlow={setFlow} className="mb-3" />
+                {step >= 1 &&
+                    <FlowSelector setStep={setStep} setFlow={setFlow} />
+                }
                 {/* Step 2 - Generate Authentication Token */}
-                {flow === 1 &&
-                    <GenerateAuthToken />
+                {step >= 2 && flow === 1 &&
+                    <GenerateAuthToken setStep={setStep}/>
                 }
-                {flow === 2 &&
-                    <GenerateAuthToken />
+                {step >= 2 && flow === 2 &&
+                    <GenerateAuthToken setStep={setStep}/>
                 }
+                {/* Step 3 : Flow 1 - Fasklink */}
+                {step >= 3 && flow === 1 &&
+                    <FastLinkCodePen setStep={setStep}/>
+                }
+                {/* Step 4 : Flow 1 - Get Linked Account Information */}
             </div>
         </div>
     );
