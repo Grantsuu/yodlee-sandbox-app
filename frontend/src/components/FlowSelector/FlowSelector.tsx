@@ -3,10 +3,9 @@ import React from 'react';
 interface FlowSelectorProps {
     setStep: any;
     setFlow: any;
-    className?: string | undefined;
 }
 
-const FlowSelector = ({ setStep, setFlow, className }: FlowSelectorProps) => {
+const FlowSelector = ({ setStep, setFlow }: FlowSelectorProps) => {
 
     const handleFlowButton = (flow: number) => {
         setStep(2)

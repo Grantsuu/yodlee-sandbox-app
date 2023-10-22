@@ -35,11 +35,11 @@ export const postUserToken = async (payload:UserTokenPostBody) => {
     }
 }
 
-export const getAccountInformation = async () => {
+export const getAccountInformation = async (id:string) => {
     try {
         const { data } = await axios.get(
             baseURL + "api/accounts",
-            {params: {name: ""}},
+            {params: {providerAccountId: id}},
         )
         return data
     } catch (error) {
