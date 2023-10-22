@@ -5,12 +5,15 @@ interface FastLinkCodePenProps {
 }
 
 const FastLinkCodePen = ({ setStep }: FastLinkCodePenProps) => {
+    const onNextStep = () => {
+        setStep(4)        
+    }
     return (
         <div className="container-fluid mb-3 text-secondary">
             <h4 className="text-light">3. Obtain <code>providerAccountId</code> from CodePen</h4>
             <ol>
                 <li>
-                    Navigate to the CodePen website <a href="https://codepen.io/team/yodlee-dev-ex/pen/JjLXMrv">here</a>.
+                    Navigate to the CodePen website <a href="https://codepen.io/team/yodlee-dev-ex/pen/JjLXMrv" target="_blank">here</a>.
                 </li>
                 <li>
                     Scroll down to the bottom of page and enter in the <code>authenticationToken</code> you generated in the previous step.
@@ -26,6 +29,12 @@ const FastLinkCodePen = ({ setStep }: FastLinkCodePenProps) => {
                     The <code>providerAccountId</code> should now be generated in the "Link Results" right above the "Link an Account" section. Be sure to record this value for future usage.
                 </li>
             </ol>
+            <button
+                type="submit"
+                className="btn btn-primary mb-3"
+                onClick={onNextStep}>
+                Next Step
+            </button>
         </div>
     )
 }

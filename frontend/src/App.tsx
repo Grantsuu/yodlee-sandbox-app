@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import FlowSelector from './components/FlowSelector/FlowSelector';
-import GenerateAuthToken from './components/GenerateAuthToken';
+import GenerateAuthToken from './components/GenerateAuthToken/GenerateAuthToken';
 import FastLinkCodePen from './components/FastLinkCodePen/FastLinkCodePen';
+import LinkedAccount from './components/LinkedAccount/LinkedAccount';
 
 const App = () => {
     const [step, setStep] = useState(1);
@@ -37,6 +38,9 @@ const App = () => {
                     <FastLinkCodePen setStep={setStep}/>
                 }
                 {/* Step 4 : Flow 1 - Get Linked Account Information */}
+                {step >= 4 && flow === 1 &&
+                    <LinkedAccount />
+                }
             </div>
         </div>
     );

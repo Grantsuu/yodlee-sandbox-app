@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { CodeBlock } from './CodeBlock/CodeBlock'
-import { postUserToken, UserTokenResponse } from '../api/YodleeSandboxAPI'
+import { CodeBlock } from '../CodeBlock/CodeBlock'
+import { postUserToken, UserTokenResponse } from '../../api/YodleeSandboxAPI'
 
 interface GenerateAuthTokenProps {
     setStep: any
@@ -80,7 +80,7 @@ const GenerateAuthToken = ({ setStep }: GenerateAuthTokenProps) => {
                 className="btn btn-primary mb-3"
                 onClick={onSubmit}>
                 Submit
-                </button>
+            </button>
             {accessToken &&
                 <CodeBlock
                     title="Generated Access Token"
