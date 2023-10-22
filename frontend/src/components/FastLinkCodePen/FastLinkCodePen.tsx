@@ -29,7 +29,7 @@ const FastLinkCodePen = ({ providerAccountId, setProviderAccountId, setStep }: F
             <h4 className="text-light">3. Obtain <code>providerAccountId</code> from CodePen</h4>
             <ol>
                 <li>
-                    Navigate to the CodePen website <a href="https://codepen.io/team/yodlee-dev-ex/pen/JjLXMrv" target="_blank">here</a>.
+                    Navigate to the CodePen website <a target="_blank" rel="noreferrer" href="https://codepen.io/team/yodlee-dev-ex/pen/JjLXMrv">here</a>.
                 </li>
                 <li>
                     Scroll down to the bottom of page and enter in the <code>accessToken</code> you generated in the previous step.

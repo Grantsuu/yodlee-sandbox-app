@@ -8,10 +8,11 @@ interface AccountInformationProps {
 }
 
 const AccountInformation = ({ providerAccountId }: AccountInformationProps) => {
-
+    const [submitClicked, setSubmitClicked] = useState(false)
     const [accountInformation, setAccountInformation] = useState("")
 
     const onSubmit = () => {
+        setSubmitClicked(true)
         getAccountInformation(providerAccountId)
             .then(data => {
                 console.log(data)
@@ -33,7 +34,7 @@ const AccountInformation = ({ providerAccountId }: AccountInformationProps) => {
                 onClick={onSubmit}>
                 Submit Request
             </button>
-            {accountInformation &&
+            {submitClicked &&
                 <div>
                     <CodeBlock
                         title="Verified Account Information"
