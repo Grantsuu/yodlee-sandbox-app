@@ -3,6 +3,8 @@ import FlowSelector from './components/FlowSelector/FlowSelector';
 import GenerateAccessToken from './components/GenerateAccessToken/GenerateAccessToken';
 import FastLinkCodePen from './components/FastLinkCodePen/FastLinkCodePen';
 import AccountInformation from './components/AccountInformation/AccountInformation';
+import RefreshAccount from './components/RefreshAccount/RefreshAccount'
+import AccountBalance from './components/AccountBalance/AccountBalance'
 
 const App = () => {
     const [step, setStep] = useState(1);
@@ -10,7 +12,7 @@ const App = () => {
     const [accessToken, setAccessToken] = useState("")
     const [providerAccountId, setProviderAccountId] = useState("")
 
-    useEffect(()=>{
+    useEffect(() => {
         // If we're on step 2 and already have an access token we can continue to step 3
         if (step === 2 && accessToken) {
             setStep(3)
@@ -38,15 +40,23 @@ const App = () => {
                 }
                 {/* Step 2 - Generate Access Token */}
                 {step >= 2 &&
-                    <GenerateAccessToken accessToken={accessToken} setAccessToken={setAccessToken} setStep={setStep}/>
+                    <GenerateAccessToken accessToken={accessToken} setAccessToken={setAccessToken} setStep={setStep} />
                 }
                 {/* Step 3 - Fasklink */}
                 {step >= 3 &&
-                    <FastLinkCodePen providerAccountId={providerAccountId} setProviderAccountId={setProviderAccountId} setStep={setStep}/>
+                    <FastLinkCodePen providerAccountId={providerAccountId} setProviderAccountId={setProviderAccountId} setStep={setStep} />
                 }
                 {/* Step 4 : Flow 1 - Get Linked Account Information */}
                 {step >= 4 && flow === 1 &&
-                    <AccountInformation providerAccountId={providerAccountId}/>
+                    <AccountInformation providerAccountId={providerAccountId} />
+                }
+                {/* Step 4: Flow 2 - Refresh Account Data */}
+                {step >= 4 && flow === 2 &&
+                    <RefreshAccount providerAccountId={providerAccountId} setStep={setStep} />
+                }
+                {/* Step 5: Flow 2 - Get Account Balance */}
+                {step >= 5 && flow === 2 &&
+                    <AccountBalance providerAccountId={providerAccountId} />
                 }
             </div>
         </div>
