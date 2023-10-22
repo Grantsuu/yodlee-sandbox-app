@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FlowSelector from './components/FlowSelector/FlowSelector';
-import GenerateAuthToken from './components/GenerateAuthToken/GenerateAuthToken';
+import GenerateAccessToken from './components/GenerateAccessToken/GenerateAccessToken';
 import FastLinkCodePen from './components/FastLinkCodePen/FastLinkCodePen';
-import LinkedAccount from './components/LinkedAccount/LinkedAccount';
+import AccountInformation from './components/AccountInformation/AccountInformation';
 
 const App = () => {
     const [step, setStep] = useState(1);
     const [flow, setFlow] = useState(0);
+    const [accessToken, setAccessToken] = useState("")
+    const [providerAccountId, setProviderAccountId] = useState("")
+
+    useEffect(()=>{
+        // If we're on step 2 and already have an access token we can continue to step 3
+        if (step === 2 && accessToken) {
+            setStep(3)
+        }
+    })
+
     return (
         <div className="container-fluid">
             {/* Home page header */}
@@ -26,20 +36,17 @@ const App = () => {
                 {step >= 1 &&
                     <FlowSelector setStep={setStep} setFlow={setFlow} />
                 }
-                {/* Step 2 - Generate Authentication Token */}
-                {step >= 2 && flow === 1 &&
-                    <GenerateAuthToken setStep={setStep}/>
+                {/* Step 2 - Generate Access Token */}
+                {step >= 2 &&
+                    <GenerateAccessToken accessToken={accessToken} setAccessToken={setAccessToken} setStep={setStep}/>
                 }
-                {step >= 2 && flow === 2 &&
-                    <GenerateAuthToken setStep={setStep}/>
-                }
-                {/* Step 3 : Flow 1 - Fasklink */}
-                {step >= 3 && flow === 1 &&
-                    <FastLinkCodePen setStep={setStep}/>
+                {/* Step 3 - Fasklink */}
+                {step >= 3 &&
+                    <FastLinkCodePen providerAccountId={providerAccountId} setProviderAccountId={setProviderAccountId} setStep={setStep}/>
                 }
                 {/* Step 4 : Flow 1 - Get Linked Account Information */}
                 {step >= 4 && flow === 1 &&
-                    <LinkedAccount />
+                    <AccountInformation providerAccountId={providerAccountId}/>
                 }
             </div>
         </div>

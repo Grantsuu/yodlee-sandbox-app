@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 import { CodeBlock } from '../CodeBlock/CodeBlock'
 import { postUserToken, UserTokenResponse } from '../../api/YodleeSandboxAPI'
 
-interface GenerateAuthTokenProps {
+interface GenerateAccessTokenProps {
+    accessToken: string,
+    setAccessToken: any,
     setStep: any
 }
 
-const GenerateAuthToken = ({ setStep }: GenerateAuthTokenProps) => {
+const GenerateAccessToken = ({ accessToken, setAccessToken, setStep }: GenerateAccessTokenProps) => {
     const [inputs, setInputs] = useState({
         clientId: '',
         secret: '',
         userName: ''
     })
-
-    const [accessToken, setAccessToken] = useState("")
 
     const inputsHandler = (e: any) => {
         const { name, value } = e.target;
@@ -34,13 +34,13 @@ const GenerateAuthToken = ({ setStep }: GenerateAuthTokenProps) => {
 
     return (
         <div className="container-fluid mb-3 text-secondary">
-            <h4 className="text-light">2. Generate an Authentication Token</h4>
+            <h4 className="text-light">2. Generate an Access Token</h4>
             <ol>
                 <li>
                     Login to your <a target="_blank" href="https://developer.envestnet.com/user/login?type=ydl">Yodlee developer account</a> and navigate to the Dashboard.
                 </li>
                 <li>
-                    Find and enter your <code>client_id</code>, <code>secret</code>, and <code>userName</code> below and click the "Submit" button to receive your authentication token.
+                    Find and enter your <code>client_id</code>, <code>secret</code>, and <code>userName</code> below and click the "Submit" button to receive your access token.
                 </li>
             </ol>
             {/* Client ID Field */}
@@ -83,7 +83,7 @@ const GenerateAuthToken = ({ setStep }: GenerateAuthTokenProps) => {
             </button>
             {accessToken &&
                 <CodeBlock
-                    title="Generated Access Token"
+                    title="Access Token"
                     code={accessToken}
                 />
             }
@@ -91,4 +91,4 @@ const GenerateAuthToken = ({ setStep }: GenerateAuthTokenProps) => {
     )
 }
 
-export default GenerateAuthToken
+export default GenerateAccessToken
