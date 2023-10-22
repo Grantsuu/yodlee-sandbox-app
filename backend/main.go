@@ -105,7 +105,7 @@ func (y *YodleeSandbox) getAccountInformation(c *gin.Context) {
 	req.URL.RawQuery = q.Encode()
 
 	req.Header.Set("Api-Version", YodleeAuthApiVersion)
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+y.AccessToken)
 
 	client := &http.Client{}
@@ -146,7 +146,7 @@ func (y *YodleeSandbox) putRefreshAccount(c *gin.Context) {
 	req.URL.RawQuery = q.Encode()
 
 	req.Header.Set("Api-Version", YodleeAuthApiVersion)
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Content-Type", "application/vnd.yodlee+json")
 	req.Header.Set("Authorization", "Bearer "+y.AccessToken)
 
 	client := &http.Client{}
@@ -188,7 +188,7 @@ func (y *YodleeSandbox) getAccountBalance(c *gin.Context) {
 	req.URL.RawQuery = q.Encode()
 
 	req.Header.Set("Api-Version", YodleeAuthApiVersion)
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+y.AccessToken)
 
 	client := &http.Client{}

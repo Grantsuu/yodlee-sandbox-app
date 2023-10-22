@@ -70,3 +70,21 @@ export const putRefreshAccount = async (id:string) => {
         }
     }
 }
+
+export const getAccountBalance = async (id:string) => {
+    try {
+        const { data } = await axios.get(
+            baseURL + "api/accountBalance",
+            {params: {providerAccountId: id}},
+        )
+        return data
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log('error message: ', error.message);
+            return error.message;
+        } else {
+            console.log('unexpected error: ', error);
+            return 'An unexpected error occurred';
+        }
+    }
+}

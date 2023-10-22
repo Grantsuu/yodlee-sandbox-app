@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { CodeBlock } from '../CodeBlock/CodeBlock'
 import { getAccountInformation } from '../../api/YodleeSandboxAPI'
+import BackToTop from '../BackToTop/BackToTop'
 
 interface AccountInformationProps {
     providerAccountId: string
@@ -33,10 +34,13 @@ const AccountInformation = ({ providerAccountId }: AccountInformationProps) => {
                 Submit Request
             </button>
             {accountInformation &&
-                <CodeBlock
-                    title="Verified Account Information"
-                    code={accountInformation}
-                />
+                <div>
+                    <CodeBlock
+                        title="Verified Account Information"
+                        code={accountInformation}
+                    />
+                    <BackToTop />
+                </div>
             }
         </div>
     )
